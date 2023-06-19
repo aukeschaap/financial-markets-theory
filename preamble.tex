@@ -1,0 +1,157 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage[a4paper]{geometry}
+\geometry{
+  a4paper,
+  left=25mm,
+  right=25mm,
+  top=30mm,
+  bottom=30mm
+}
+
+
+
+% Better fonts
+% \usepackage{newpxtext}
+\usepackage{cmbright}
+\usepackage{lmodern}
+
+% Removes indentation and adds vspace
+%   NOTE: add 1em below each theorem if disabled
+\usepackage{parskip}
+
+% Equations and mathematical symbols
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{calrsfs}
+
+% Hyperlinks
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Appendices
+\usepackage{appendix}
+
+
+% Code listings
+\usepackage{listings}
+\usepackage{transparent}
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=7mm,
+  belowskip=7mm,
+  columns=flexible,
+  basicstyle={\footnotesize\ttfamily},
+  keywordstyle={\bfseries\color{NavyBlue}},
+  commentstyle=\color{Gray},
+  stringstyle=\color{Green},
+  breaklines=false,
+  breakatwhitespace=true,
+  tabsize=3,
+  morecomment=[l][\color{Gray}\transparent{0.5}]{\#},
+}
+
+
+% Theorems
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em, skipbelow=0em, innertopmargin=5pt, innerbottommargin=6pt} 
+
+\theoremstyle{definition}
+
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, mdframed={ nobreak,}]{thmbox}
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={ nobreak, rightline=false, topline=false, bottomline=false}]{infobox}
+
+\declaretheorem[style=thmbox, name=Definition]{definition}
+\declaretheorem[sibling=definition, style=thmbox, name=Corollary]{corollary}
+\declaretheorem[sibling=definition, style=thmbox, name=Proposition]{proposition}
+\declaretheorem[sibling=definition, style=thmbox, name=Theorem]{theorem}
+\declaretheorem[sibling=definition, style=thmbox, name=Lemma]{lemma}
+
+\declaretheorem[style=infobox, name=Assumption]{assumption}
+\declaretheorem[style=infobox, name=Explanation]{explanation}
+\declaretheorem[style=infobox, name=Exercise]{ex}
+\declaretheorem[style=infobox, name=Example]{eg}
+\declaretheorem[style=infobox, name=Remark]{remark}
+\declaretheorem[style=infobox, name=Note]{note}
+
+\declaretheoremstyle[headfont=\bfseries\sffamily, bodyfont=\normalfont, numbered=no, mdframed={} ]{thmsolutionbox}
+\declaretheorem[numbered=no, style=thmsolutionbox, name=Solution]{solution}
+
+
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{0.8\columnwidth}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+
+\makeatletter
+
+% Set space around theorems
+\def\thm@space@setup{%
+  \thm@preskip=.5\topsep \thm@postskip=0pt
+}
+
+\def\@lecture{}%
+\newcommand{\lecture}[1]{
+    \def\@lecture{Lecture #1}
+}
+
+% These are the fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13pt}
+
+% LE: left even
+% RO: right odd
+% CE, CO: center even, center odd
+% My name for when I print my lecture notes to use for an open book exam.
+% \fancyhead[LE,RO]{Auke Schaap}
+
+\fancyhead[RO,LE]{\@lecture} % Right odd,  Left even
+\fancyhead[RE,LO]{}          % Right even, Left odd
+
+\fancyfoot[RO,LE]{\thepage}  % Right odd,  Left even
+\fancyfoot[RE,LO]{}          % Right even, Left odd
+\fancyfoot[C]{\leftmark}     % Center
+
+\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%
+% Custom macros %
+%%%%%%%%%%%%%%%%%
+
+\newcommand\N{\ensuremath{\mathbb{N}}}
+\newcommand\R{\ensuremath{\mathbb{R}}}
+\newcommand\E{\ensuremath{\mathbb{E}}}
+
+
+% (*) above a symbol
+\newcommand\mygt{\stackrel{\mathclap{\scriptsize\mbox{$(\ast)$}}}{>}}
+
+\newif\ifshowcomments
+\showcommentstrue
+% \showcommentsfalse
+\ifshowcomments
+\newcommand{\mynote}[2]{\fbox{\bfseries\sffamily\scriptsize{#1}}
+{\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}}
+\newcommand{\citehere}[0]{\textcolor{red}{\fbox{\bfseries\sffamily\scriptsize{CITATION}}}}
+\else
+\newcommand{\mynote}[2]{}
+\fi
+\newcommand{\todo}[1]{\textcolor{blue}{\mynote{To do}{#1}}}
