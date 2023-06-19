@@ -290,7 +290,7 @@ We say of two agents $a$ and $b$ that $a$ is more risk averse than $b$ if agent 
 
 \lecture{4}
 
-\begin{proposition}
+\begin{proposition} % proposition 2.2
     Given two increasing and strictly concave utility functions $u^a$ and $u^b$, the following conditions are equivalent:
     \begin{itemize}
         \item $r^a_{u^a}(x) \geq r^a_{u^b}(x)$ for all $x \in \R_{\geq0}$.
@@ -373,17 +373,17 @@ The first order necessary condition is given by $\E[u'(\tilde{W})(\tilde{r}_n - 
 \begin{proposition}
     Consider a strictly risk averse agent with a strictly increasing utility function. A sufficient condition such that $\mathbf{w}^* \not\in \R^N_{\geq 0}$ is that the return risk premium of all assets is non positive, and negative for at least one asset.
     \begin{explanation}
-        This constitutes an arbitrage opportunity. \todo{more explanation?}
+        As the agent is risk averse, he requires a positive risk premium to invest in a risky asset. If the risk premium is zero, the agent will not invest in the asset. If the risk premium is negative, the agent will short the asset. Hence, $\mathbf{w}^* \in \R^N_{\leq 0}$.
     \end{explanation}
 \end{proposition}
 
 \begin{proposition}
  A necessary and sufficient conditions so that $\mathbf{w}^* = 0$ for an agent with a strictly increasing and strictly concave utility function is that
 \[
-    \E[\tilde{r}_n - r_f]  = r_f, \;\;\; n = 1, \dots, N.
+    \E[\tilde{r}_n]  = r_f, \;\;\; n = 1, \dots, N.
 \]
 \begin{explanation}
-    \todo{Explain.}
+    The agent is risk averse, due to the concavity of the utility function. Hence, the agent will only invest in a risky asset for a positive risk premium. If the risk premium is zero, the agent will invest in the risk-free asset, so $\mathbf{w}^* = 0$.
 \end{explanation}
 \end{proposition}
 
@@ -413,9 +413,9 @@ For returns with a small dispersion, the following approximation holds:
 \end{proposition}
 
 \begin{proposition}
-    If an agent is risk averse with a strictly increasing utility function, then:
+    If an agent is risk averse with a strictly increasing utility function, then
     \[
-        \E[\tilde{r}_n] - r_f \geq 0
+        \E[\tilde{r}_n] - r_f \geq 0.
     \]
 \end{proposition}
 
@@ -428,6 +428,9 @@ Limit our portfolio problem to one risky and one risk-free asset. By $w(x)$ we d
         r^{a'}_u(z) > 0 \;\;\; \forall z \in \R_{\geq 0} & \implies w'(x) < 0 \;\;\; \forall x \in \R_{\geq 0} \\
         r^{a'}_u(z) = 0 \;\;\; \forall z \in \R_{\geq 0} & \implies w'(x) = 0 \;\;\; \forall x \in \R_{\geq 0}
     \end{align*}
+    \begin{explanation}
+        DARA agents will increasingly invest in risky assets. IARA agents will decreasingly invest in risky assets. CARA agents will invest a constant proportion of their wealth in risky assets.
+    \end{explanation}
 \end{proposition}
 
 The absolute risk aversion coefficient gives information of changes in the levels of the risky asset demand, not in the percentage of wealth invested in the risky asset. For that, we use the relative risk aversion coefficient.
@@ -439,6 +442,9 @@ The absolute risk aversion coefficient gives information of changes in the level
         r^{r'}_u(z) > 0 \;\;\; \forall z \in \R_{\geq 0} & \implies \frac{dw}{dx}\frac{x}{w} > 1 \;\;\; \forall x \in \R_{\geq 0} \\
         r^{r'}_u(z) = 0 \;\;\; \forall z \in \R_{\geq 0} & \implies \frac{dw}{dx}\frac{x}{w} = 1 \;\;\; \forall x \in \R_{\geq 0}
     \end{align*}
+    \begin{explanation}
+        \todo{Explain}
+    \end{explanation}
 \end{proposition}
 
 \section{Insurance, Demand and Prudence}
@@ -458,23 +464,191 @@ with equality for $w^* > 0$. The Arrow security is in fact a gamble: $[1-q, -q; 
 \[
     u'\left(W_0 - D + w^*(1-q)\right) = u'\left(W_0 - w^*q\right).
 \]
-By concavity of $u$ we find $w^* = D$, so for actuarially fair price, the risk averse agent will insure themselve completely. If the gamble is not fair, then there is partial insurance in case $q > \pi$, and over insurance in case $q < \pi$.
+By concavity of $u$ we find $w^* = D$, so for actuarially fair price, the risk averse agent will insure themself completely. If the gamble is not fair, then there is partial insurance in case $q > \pi$, and over insurance in case $q < \pi$.
 
-Consider now the generic gamble $[x_1, x_2; \pi, 1-\pi]$. The ratio of the marginal utilities in two states of the world, weighted by the probability of that state, denoted $\text{SMS}(x_1, x_2)$, is called the \textit{marginal rate of substitution}. This is equal to minus the slope of the tangent line to the indifference curve at the point $(x_1, x_2)$:
+Consider now the generic gamble $\tilde{x} = [x_1, x_2; \pi, 1-\pi]$. The ratio of the marginal utilities in two states of the world, weighted by the probability of that state, denoted $\text{SMS}(x_1, x_2)$, is called the \textit{marginal rate of substitution}. This is equal to minus the slope of the tangent line to the indifference curve at the point $(x_1, x_2)$:
 \[
     \text{SMS}(x_1, x_2) = \left.-\frac{dx_2}{dx_1}\right|_{U(x) = \tilde{U}} = - \frac{\pi u'(x_1)}{(1-\pi)u'(x_2)}.
 \]
+\begin{figure}[ht]
+    \centering
+    \incfig[0.65]{insurance}
+    \caption{Expected utility in the state space. }
+    \label{fig:insurance}
+\end{figure}
+This allows us to show that the indifference curves in the state space are convex. It suffices to show that
+\[
+    \frac{d\text{SMS}(x_1, x_2)}{dx_1} \leq 0, \;\;\; \forall x_1, x_2 \in \R^2_{\geq 0}.
+\]
+
+Now suppose you can buy Arrow securities paying 1 in case you end up in $x_1$, or $x_2$, with prices $q_1$ and $q_2$. Then the optimization problem becomes
+\begin{align*}
+    \max_{x_1, x_2} U(x_1, x_2) = \pi u(x_1) + (1-\pi)u(x_2) \\
+    \text{s.t. } \; q_1x_1 + q_2x_2 \leq q_1e1 + q_2e2.
+\end{align*}
+Then we find as necessary condition to be satisfied in the solution:
+\[
+    \frac{\pi u'(x^*_1)}{(1-\pi)u'(x^*_2)} = \frac{q_1}{q_2}.
+\]
+In case the securities are fairly priced, the agent will reach an endowment with no risk. Otherwise,
+\begin{align*}
+    \frac{q_1}{q_2} > \frac{\pi}{(1-\pi)} & \implies x^*_1 < x^*_2 \\
+    \frac{q_1}{q_2} < \frac{\pi}{(1-\pi)} & \implies x^*_1 > x^*_2.
+\end{align*}
 
 \lecture{7}
 
 \section{Stochastic Dominance}
+Take the portfolio problem setup with $N$ risky assets, having random returns $\tilde{r}_i$, with covariance matrix
+\[
+    V = \begin{pmatrix}
+        \sigma^2_1  & cov(\tilde{r}_1, \tilde{r}_2) & \cdots & cov(\tilde{r}_1, \tilde{r}_N) \\
+        cov(\tilde{r}_2, \tilde{r}_1) & \sigma^2_2 & \cdots & cov(\tilde{r}_2, \tilde{r}_N) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        cov(\tilde{r}_N, \tilde{r}_1) & cov(\tilde{r}_N, \tilde{r}_2) & \cdots & \sigma^2_N
+    \end{pmatrix}.
+\]
+Furthermore, we denote the relative weights by
+\[
+    w \in \Delta_N, \;\;\; \Delta_N = \left\{x \in \R^N  : \; \sum_{i=1}^N x_i = 1\right\}.
+\]
+Then, by denoting by $e$ the vector of expected returns of the random assets, we find for expected return and variance of the portfolio:
+\begin{align*}
+    \E[\tilde{r}] = w^\top e = \sum^N_{i=1}w_ie_i = \sum^N_{i=1}w_i\E[\tilde{r}_i], \\
+    \sigma^2(w) = w^\top V w = \sum^N_{i=1}\sum^N_{j=1}w_icov(\tilde{r}_i, \tilde{r}_j)w_j.
+\end{align*}
+The matrix $V$ is symmetric. In case all returns are linearly independent, then the matrix $V$ is non singular and positive definite.
+
+\begin{definition}[First order stochastic dominance]
+    A portfolio $w^1$ stochastically dominates $w^2$ according to the \textit{first order stochastic dominance} criterion ($w^1 \succeq_{FSD} w^2$) if and only if $U(\tilde{r}_1) \geq U(\tilde{r}_2)$ for all non-decreasing utility functions.
+\end{definition}
+
+For this proposition, we assume the random variables to be normalized to the interval $[0, 1]$, so $F_i(1) = 1$.
+\begin{proposition}
+    The following statements are equivalent:
+    \begin{itemize}
+        \item $w^1 \succeq_{FSD} w^2$
+        \item $F_1(x) \leq F_2(x)$ for all $x \in [0, 1]$
+        \item $\tilde{r}^1 =^d \tilde{r}^2 + \tilde{\epsilon}$ where $\tilde{\epsilon}$ is a positive random variable.
+    \end{itemize}
+\end{proposition}
+This is relatively weak, as it is defined on a large class of utility functions.
+\begin{definition}[Second order stochastic dominance]
+    A portfolio $w^1$ stochastically dominates $w^2$ according to the \textit{second order stochastic dominance} criterion ($w^1 \succeq_{SSD} w^2$) if and only if $U(\tilde{r}_1) \geq U(\tilde{r}_2)$ for all concave utility functions.
+\end{definition}
+
+\begin{proposition}
+    The following statements are equivalent:
+    \begin{itemize}
+        \item $w^1 \succeq_{SSD} w^2$
+        \item $\E[\tilde{r}^1] \geq \E[\tilde{r}^2]$, with $G(y) = \int_0^y\left(F_1(z) - F_2(z)\right) dz \leq 0$ for all $y \in [0, 1]$.
+        \item $\tilde{r}^2 =^d \tilde{r}^1 + \tilde{\epsilon}$, where $\tilde{\epsilon}$ is a random variable such that $\E[\tilde{\epsilon} | \tilde{r}^1] = 0$.
+    \end{itemize}
+\end{proposition}
+The result of this is that
+\[
+    w^1 \succeq_{SSD} w^2 \implies \E[\tilde{r}^1] = \E[\tilde{r}^2] \text{ and } \sigma^2(w^1) \leq \sigma^2(w^2).
+\]
+We now have partial ordering, i.e. only for portfolios with the same expected return.
+\begin{definition}[Second order stochastic monotonic dominance]
+    A portfolio $w^1$ stochastically dominates $w^2$ according to the \textit{second order stochastic monotonic dominance} criterion ($w^1 \succeq_{SSD}^M w^2$) if and only if $U(\tilde{r}_1) \geq U(\tilde{r}_2)$ for all non-decreasing and concave utility functions.
+\end{definition}
+
+\begin{proposition}
+    The following statements are equivalent:
+    \begin{itemize}
+        \item $w^1 \succeq_{SSD}^M w^2$
+        \item $\E[\tilde{r}^1] \geq \E[\tilde{r}^2]$, with $G(y) = \int_0^y\left(F_1(z) - F_2(z)\right) dz \leq 0$ for all $y \in [0, 1]$.
+        \item $\tilde{r}^2 =^d \tilde{r}^1 + \tilde{\epsilon}$, where $\tilde{\epsilon}$ is a random variable such that $\E[\tilde{\epsilon} | \tilde{r}^1] \leq 0$.
+        \item $\tilde{r}^2 =^d \tilde{r}^1 + \tilde{\xi} + \tilde{\nu}$, where $\tilde{\xi}$ is a positive random variable and $\E[\tilde{\nu} | \tilde{r}^1 + \tilde{\xi}] = 0$.
+    \end{itemize}
+\end{proposition}
+
+Note that, by definition, second order stochastic dominance implies second order stochastic monotonic dominance. That is, if $w^1 \succeq_{SSD} w^2$, then $w^1 \succeq_{SSD}^M w^2$.
 
 \section{Mean-Variance Analysis}
 
+The \textit{mean-variance} criterion is given by:
+\[
+    w^1 \succeq_{MV} w^2 \iff \E[\tilde{r}^1] \geq \E[\tilde{r}^2] \text{ and } \sigma^2(w^1) \leq \sigma^2(w^2).
+\]
+\begin{explanation}
+    That is, an agent prefers random variables with higher expected values, and dislikes random variables with higher variance.
+\end{explanation}
+This is again a partial ordering; there is no ordering for portfolios with higher risk and higher expected return, or lower risk and lower expected return. The justification for the criterion is as follows. If $u$ is quadratic, then $w^1 \succeq_{MV} w^2 \iff U(w^1) \geq U(w^2)$. We can expand this up to the second order, and find that $\E[u(\tilde{r})] \approx u(\E[\tilde{r}]) + \frac{1}{2}u''(\E[\tilde{r}])\sigma^2(\tilde{r})$.
+
+\lecture{8}
+
 \section{Portfolio Frontier}
 
+The \textit{porfolio frontier} (PF) is identified by the second order stochastic dominance criterion. Given a portfolio with expected return $\E[\tilde{r}^p]$. The portfolio $w^p$ that is not SSD by any other portfolios with that return, i.e. the portfolio with the smallest variance of all portfolios having that return, is part of the PF. We can find $w^p$ by solving:
+\begin{align*}
+    \min_w& \;\frac{1}{2}w^\top V w, \;\;\; w \in \R^N \\
+    \text{s.t.}&  \;\;\; w^\top e = \E[\tilde{r}^p], \;\;\; \sum_{i=1}^N w_i = 1.
+\end{align*}
+
+The solution to this is given by
+\[
+    w^p = g + h \E[\tilde{r}^p],
+\]
+where $g$ and $h$ are not dependent on the expected return, and given by:
+\begin{align*}
+    g = \frac{BV^{-1}\mathbf{1}-AV^{-1}e}{D}, && h = \frac{CV^{-1}e - AV^{-1}\mathbf{1}}{D},
+\end{align*}
+\vspace{-15pt}
+\begin{align*}
+    A = \mathbf{1}^\top V^{-1}e, && B = e^\top V^{-1}e, && C = \mathbf{1}^\top V^{-1} \mathbf{1}, && D = BC - A^2.
+\end{align*}
+
+The PF has the following important properties:
+\begin{enumerate}
+    \item Given two portfolios in the PF, then any other portfolio can be attained by a linear combination of those 2 portfolios.
+    \item The covariance and variance are given by:
+    \begin{align*}
+        cov(\tilde{r}^p, \tilde{r}^q) = \frac{C}{D}\left(\E[\tilde{r}^p] - \frac{A}{C}\right)\left(\E[\tilde{r}^q] - \frac{A}{C}\right) + \frac{1}{C} \\
+        \sigma^2(w^p) = \frac{1}{D}\left(C\E[\tilde{r}^p]^2 - 2A\E[\tilde{r}^p] + B\right).
+    \end{align*}
+    \item The PF is a hyperbola in the mean-standard-deviation (MSD) diagram, and a parabola in the mean-variance (MVAR) diagram. The portfolio with the minimal standard deviation $w^MVP$ defines the \textit{minimum variance point} in the diagrams,
+    \[
+        w^{MVP} = \frac{V^{-1} \mathbb{I}}{C}.
+    \]
+    \item For every expected return, there is one point on the PF. For every standard deviation or variance (beyond the minimal variance point) there are two points on the PF. We define the \textit{efficient portfolio frontier} (EPF) as the part of the PF that is above the minimal variance point, i.e.
+    \[
+        \text{EPF} = \left\{w \in PF : \E[\tilde{r}] > \frac{A}{C}\right\}.
+    \]
+    The lower branch is the inefficient part of the PF. In case agents maximize their expected utility, then restriction to the EPF is justified if the utility function is increasing in average return and decreasing in variance.
+
+    \item Given a portfolio $w^p$ belonging to the PF, there exists a portfolio $w^{zc(p)}$ (also belonging to the PF) that has zero covariance with $w^p$. For the return of this portfolio we find
+    \[
+        \E[\tilde{r}^{zc(p)}] = \frac{A}{C} - \frac{\frac{D}{C^2}}{\E[\tilde{r}^p] - \frac{A}{C}}
+    \]
+\end{enumerate}
+
+\begin{proposition} \label{prop:3.4}
+    Let $w^q$ be a portfolio and let $w^p$ be a portfolio that belongs to the PF, and that is not the minimal variance portfolio. Then
+    \begin{align*}
+        w^q \in PF &\implies \tilde{r}^q = (1-\beta_{qp})\tilde{r}^{zc(p)} + \beta_{qp}\tilde{r}^p, \\
+        w^q \not\in PF &\implies \tilde{r}^q = (1-\beta_{qp})\tilde{r}^{zc(p)} + \beta_{qp}\tilde{r}^p + \tilde{\epsilon}^{qp},
+    \end{align*}
+    where
+    \[
+        \E[\tilde{\epsilon}^{qp}] = 0, \;\;\;\;\; \beta_{qp} = \frac{cov(w^p, w^q)}{\sigma^2(w^p)}.
+    \]
+\end{proposition}
+
+Note that the return of any portfolio is the linear combination of a portfolio on the frontier, its zero-covariance counterpart and a random variable with zero mean and zero covariance with the frontier portfolios. Furthermore, the coefficients of the frontier portfolio and its zero covariance counterpart are the regression coefficients of the portfolio on those frontier portfolios.
+
+\todo{Excel example?}
 
 \section{Portfolio Frontier with a Risk-Free Asset}
+
+Consider now the setup of $N$ risky assets, with a risk-free asset included. The constraint $W \in \Delta_N$, with $\Delta_N = \{x \in \R^N : \sum_{n=1}^{N} = 1\}$. We can relax this by investing the fraction $1 - w^\top \mathbb{I} = 1 - \sum_{n=1}^{N} w_n$ in the risk-free asset. In order to identify the portfolio frontier that includes the risk-free asset (PF\textsuperscript{*}), we have to solve the same problem, but under a single constraint:
+\begin{align*}
+    \min_w \frac{1}{2}w^\top V w, \;\;\; w \in \R^N, \\
+    \text{s.t.} \;\;\; w^\top e + (1-w^\top \mathbb{I})r_f = \E[\tilde{r}^p].
+\end{align*}
+
+As the PF is a hyperbola in the MSD diagram, we have that, if $r_f \not= \frac{A}{C}$, then there is exactly one point in which the PF and PF\textsuperscript{*} coincide. If $r_f < \frac{A}{C}$, this is a point on the EPF. If $r_f > \frac{A}{C}$, then this is a point on the lower branch of the PF, so it is inefficient. 
 
 \begin{figure}[ht]
     \centering
@@ -483,11 +657,74 @@ Consider now the generic gamble $[x_1, x_2; \pi, 1-\pi]$. The ratio of the margi
     \label{fig:epf}
 \end{figure}
 
+\begin{proposition}
+    Let $w^q$ be a portfolio and let $w^p$ be a portfolio that belongs to the PF\textsuperscript{*}, where the expected return of $w^p$ is not equal to the risk-free rate. Then
+    \begin{align*}
+        w^q \in PF^* &\implies \tilde{r}^q = (1-\beta_{qp})r_f + \beta_{qp}\tilde{r}^p, \\
+        w^q \not\in PF^* &\implies \tilde{r}^q = (1-\beta_{qp})r_f + \beta_{qp}\tilde{r}^p + \tilde{\epsilon}^{qp},
+    \end{align*}
+    where
+    \[
+        cov(\tilde{r}^q, \tilde{\epsilon}^{qp}) = \E[\tilde{\epsilon}^{qp}] = 0, \;\;\;\;\; \beta_{qp} = \frac{cov(\tilde{r}^q, \tilde{r}^p)}{\sigma^2(\tilde{r}^p)}.
+    \]
+    Moreover, for any portfolio $w^q$,
+    \[
+        \E[\tilde{r}^q] - r_f = \beta_{qp}(\E[\tilde{r}^p] - r_f).
+    \]
+\end{proposition}
+
+That brings us to the \textit{mutual fund separation} property: For any portfolio $w^q$, there is a portfolio that is on the EPF\textsuperscript{*} which is a linear combination of the risk-free and tangent portfolio on the EPF, that is better in the SSD sense. \todo{rewrite this sentence}
+
 \section{CAPM}
+
+Consider an economy with $I$ agents ($i = 1, \dots, I$). The wealth of agent i at time $t=0$ is given by $W^i_0 \geq 0$. The percentage of wealth that agent $i$ holds in asset $n$ is given by $w^i_n$, with $n = 1, \dots, N$. The return of asset $n$ is given by the random variable $\tilde{r}^n$, with finite variance. The wealth of the economy is then given by
+\[
+    W_0^m = \sum_{i=1}^{I} W_0^i.
+\]
+The percentage of wealth that the economy holds in asset $n$ is given by
+$w^m_n$ and $w^m$ is called the market portfolio. We have the following assumptions:
+\begin{itemize}
+    \item Perfectly competitive markets.
+    \item No transaction costs and taxes, and assets are perfectly divisible.
+    \item Agent's preferences can be represented through the expected utility.
+    \item Agents are risk averse.
+    \item The probabilistic framework is common knowledge.
+    \item The mutual fund separation property holds, or agent's optimal portfolios belong to the PF.
+    \item The economy is closed.
+\end{itemize}
+
+In equilibrium, the market demand of an asset must be equal to its supply. That is,
+\[
+    w^m_n = \sum_{i=1}^{I} w^i_n \frac{W^i_0}{W^m_0}
+\]
+If agents' portfolios belong to the PF, then the market portfolio $w^m$ also belongs to the PF. If $w^m$ is different from the minimal variance point, we can use \cref{prop:3.4} to obtain
+\begin{align*}
+    \E[\tilde{r}^q] = \E[\tilde{r}^{zc(m)}] + \beta_{qm}\left(\E[\tilde{r}^m] - \E[\tilde{r}^{zc(m)}]\right), \\
+    \tilde{r}^m = \sum_{n=1}^{N} w^m_n \tilde{r}^n, \;\;\; \beta_{qm} = \frac{cov(w^q, w^m)}{\sigma^2(w^m)}.
+\end{align*}
+This is a straight line in the beta-expected return plane. The line is called the \textit{security market line}. If the slope of the line is positive, then the market portfolio is efficient. If the slope is negative, then the market portfolio is inefficient. \todo{multivariate normal asset returns}
+
+Including the risk free asset gives the relationship
+\[
+    \E[\tilde{r}^q] = r_f + \beta_{qm}\left(\E[\tilde{r}^m] - r_f\right).
+\]
+If $r_f < \frac{A}{C}$ then the market portfolio is efficient, and all agents hold a combination of the risk-free asset and the market portfolio. If $r_f > \frac{A}{C}$, then the market portfolio is inefficient, and all agents hold only the risk-free asset.
+
+Conclusions:
+\begin{itemize}
+    \item The CAPM is a one-factor model, where beta is the factor that linearly relates the risk premium of a portfolio.
+    \item The risk premium of a portfolio has the same sign as the risk premium of the market portfolio in case of positive correlation. In case of negative correlation, it has the opposite sign.
+    \item The return of a portfolio can be decomposed into a constant, a risk component associated with market return (systemic risk), and a component with zero mean and zero correlation with market return (idiosyncratic risk).
+\end{itemize}
+
 
 \section{Empirical Test CAPM}
 
+\lecture{9}
+
 \section{Arbitrage Pricing Theory}
+
+\lecture{10}
 
 \section{Fundamental Theorem of Asset Pricing}
 

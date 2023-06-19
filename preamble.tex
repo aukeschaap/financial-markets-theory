@@ -30,10 +30,11 @@
 % Equations and mathematical symbols
 \usepackage{amsmath, amssymb, amsthm, mathtools}
 \usepackage{calrsfs}
+\usepackage{gensymb}
 
 % Hyperlinks
 \usepackage{hyperref}
-\usepackage{cleveref}
+\usepackage[noabbrev]{cleveref}
 
 % Appendices
 \usepackage{appendix}
@@ -92,9 +93,9 @@
 \usepackage{pdfpages}
 \usepackage{transparent}
 
-\newcommand{\incfig}[1]{%
-    \def\svgwidth{0.8\columnwidth}
-    \import{./figures/}{#1.pdf_tex}
+\newcommand{\incfig}[2][0.8]{%
+    \def\svgwidth{#1\textwidth}
+    \import{./figures/}{#2.pdf_tex}
 }
 
 
