@@ -1,4 +1,4 @@
-\documentclass[twoside]{article}
+\documentclass[twoside, titlepage]{article}
 
 \input{preamble.tex}
 
@@ -11,10 +11,11 @@
 
 \begin{document}
 \maketitle
+
 \newpage
 
-
-\begin{table}[h]
+\thispagestyle{empty}
+\begin{table}
     \centering
     \begin{tabular}{l|llll}
     Lecture &  Reading  &       Exercises & Document \\
@@ -33,7 +34,7 @@
     \caption{Overview of the lectures, readings, exercises and documents.}
 \end{table}
 
-\begin{table}[h]
+\begin{table}
     \centering
     \begin{tabular}{l|l}
     Chapter & Sections \\
@@ -47,7 +48,11 @@
     \caption{Overview of the chapters and sections.}
 \end{table}
 
-\newpage
+\clearpage
+
+\thispagestyle{empty}
+\tableofcontents
+\clearpage
 
 \lecture{1}
 \section{Choices under certainty}
@@ -697,6 +702,9 @@ In equilibrium, the market demand of an asset must be equal to its supply. That 
 \[
     w^m_n = \sum_{i=1}^{I} w^i_n \frac{W^i_0}{W^m_0}
 \]
+\begin{remark}
+    In practice this means that we can 'read' the market portfolio from the market using the \textit{market captialization weights}, i.e. $w^m_n = (\# \text{shares outstanding} \times \text{share price}) / \text{total value of the economy}$.
+\end{remark}
 If agents' portfolios belong to the PF, then the market portfolio $w^m$ also belongs to the PF. If $w^m$ is different from the minimal variance point, we can use \cref{prop:3.4} to obtain
 \begin{align*}
     \E[\tilde{r}^q] = \E[\tilde{r}^{zc(m)}] + \beta_{qm}\left(\E[\tilde{r}^m] - \E[\tilde{r}^{zc(m)}]\right), \\
@@ -717,16 +725,103 @@ Conclusions:
     \item The return of a portfolio can be decomposed into a constant, a risk component associated with market return (systemic risk), and a component with zero mean and zero correlation with market return (idiosyncratic risk).
 \end{itemize}
 
-
 \section{Empirical Test CAPM}
+
+To test CAPM on historical data we have to estimate beta and the expected returns. We can write the asset returns as:
+\[
+    \tilde{r}_n(t) = \E[\tilde{r}_n] +  \beta_{nm}(\tilde{r}^m(t) - \E[\tilde{r}^m]) + \tilde{\epsilon}_n(t)
+\]
+Now we impose CAPM restrictions and get:
+\[
+    \tilde{r}_n(t) - r_f = \alpha_n + \gamma_{n}(\tilde{r}^m(t) - r_f) + \tilde{\epsilon}(t)
+\]
+We assume that the asset returns are stationary, so this models holds period by period. There is no observarble market portolio, so we take a stock index. Then we can estimate $\beta$ and test the hypothesis on the daily asset returns.
+
+The result is that in the early 70's, much evidence for the CAPM was found. Thereafter, additional explantory variables are introduced, e.g. size of the company, leverage, value effect, momentum effect, etc. There are three groups: loyalists, who think that counterevidence is a statistical flaw; revisionists, who think that extra risk factors need to be added; heretics, who think the market is irrational.
 
 \lecture{9}
 
 \section{Arbitrage Pricing Theory}
 
+If we take two other assumptions to derive the risk premia, we can derive a different model. Firstly, there are no arbitrage opportunities in the market. Secondly, a multifactor model holds for the asset returns, and the model is common knowledge.
+
+Suppose we have $N$ risky assets, traded in the market in a two period model $(t=0, t=1$). The returns over this period are given by $K$ risk factors:
+\[
+    \tilde{r}_n = e_n + \sum_{k=1}^{K} b_{nk} \tilde{\delta}_k, \;\;\; n = 1, \dots, N.
+\]
+Here, $\tilde{\delta}_k$ are the risk factors. We assume that $\E[\tilde{\delta}_k] = 0$, and therefore the expected return of asset $n$ is given by $e_n$. That is, $\tilde{r} = e + B\tilde{\delta}$, written in vector form.
+
+\begin{proposition} \label{prop:5.2}
+    Given the linear multifactor model for asset returns. Without arbitrage opportunities in the market, there exists a vector $\lambda \in \R^K$ such that:
+    \[
+        e - r_f\mathbb{I} = B\lambda.
+    \]
+\end{proposition}
+
+\begin{proof}
+    \todo{Prove this!}
+\end{proof}
+
+The expected return of asset $n$ is then given by
+\[
+    \E[\tilde{r}_n] = e_n + \sum_{k=1}^{K} b_{nk} \lambda_k, \;\;\; n = 1, \dots, N.
+\]
+However, this does not take idiosyncratic risk into account. Introducing that gives
+\[
+    \tilde{r}_n = e_n + \sum_{k=1}^{K} b_{nk} \tilde{\delta}_k + \tilde{\epsilon}_n, \;\;\; n = 1, \dots, N,
+\]
+where $\E[\tilde{\delta}_k] = 0$, $\E[\tilde{\epsilon}_n] = 0$.
+
+An \textit{asymptotic arbitrage} is a subsequence of portfolios such that $w^{N'T}\mathbb{I} = 0$, and
+\[
+    \lim_{N' \to \infty} \E[w^{N'T}\tilde{r}^{N'}] = +\infty \;\;\; \text{and} \;\;\; \lim_{N' \to \infty} \sigma^2(w^{N'T}\tilde{r}^{N'}) = 0.
+\]
+\begin{proposition}
+    Given the linear multifactor model for asset returns, without asymptotic arbitrage. There exists a scalar $\lambda^N_0$, a vector $\lambda^N \in \R^K$ and a positive constant $\alpha$ such that:
+    \[
+        \sum_{n=1}^{N}\left(e^N_n - \lambda^N_n - \sum_{k=1}^{K} b^N_{nk} \lambda^N_k\right)^2 \leq \alpha.
+    \]
+\end{proposition}
+If we now add the risk-free asset to the model, we get that $\lambda^N_0 = r_f$. The consequence is
+\[
+    e^N - \mathbb{I}r_f \approx B^N \lambda^N.
+\]
+
 \lecture{10}
 
 \section{Fundamental Theorem of Asset Pricing}
 
+Assume that we have $S$ states of the world, $s = 1, \dots, S$ with the probability that we are in state $s$ given by $\pi_s$. The economy has $N$ assets with initial price vector $q \in \R^N$, and the portfolio weights $w \in \R^N$, so the initial value is given by $q^\top w$. The matrix $D \in \R^{S \times N}$ contains the dividends of the $N$ assets at time $t=1$ in each state of the world. So, $Dw$ is the payoff in $S$ states of the world at time $t=1$ of the portfolio.
+
+Given the price-dividend couple $(q, D)$, a portfolio $w$ constitutes an arbitrage if one of the following holds:
+\begin{itemize}
+    \item Arbitrage of the first type: $q^\top w \leq 0$ and $Dw > 0$.
+    \begin{explanation}
+        \todo{explain}
+    \end{explanation}
+    \item Arbitrage of the second type: $q^\top w < 0$ and $Dw \geq 0$.
+    \begin{explanation}
+        \todo{explain}
+    \end{explanation}
+\end{itemize}
+From the no-arbitrage assumption, two properties arise. The \textit{law of one price} states that two portfolios with the same dividend in every state of the world at $t=1$, should have the same market value at $t=0$. \textit{Arbitrage without risk} means that there is no portfolio with non-positive market value at $t=0$ getting a constant positive amount of money at $t=1$.
+
+We define the pricing functional as the function $q : \R^S \mapsto \R$ that maps a pay-off (or consumption plan) into the initial market value. The value $q(1_s)$ is the price of reaching state  of the world $s$ (cf. the Arrow-Debreu price). The pricing functional is linear if $q(\alpha c_1 + \beta c_2) = \alpha q(c_1) + \beta q(c_2)$ for all $x, y \in \R^S$ and $\alpha, \beta \in \R$. There exists a linear pricing functional if and only if there exists a solution to the system $q = D^\top m$, with $m_s = q(\mathbb{I}_s)$. That is,
+\[
+    q_n = \sum_{s=1}^{S}d_{ns}m_s,
+\]
+and $q(c) = m^\top c$.
+
+The pricing functional is strictly positive if $m$ is strictly positive. If now matrix $D$ has full rank and $N \geq S$ (so the market is complete) then the state price vector $m$ exists and is unique. Otherwise markets are incomplete and the state price vector is not unique.
+\begin{proposition}[Fundamental Theorem of Asset Pricing]
+    Given a couple of of a price vector $q \in \R^N$ and a dividend matrix $D$, there are no arbitrage opportunities in the market if and only if there exists a strictly positive linear pricing functional.
+\end{proposition}
+A strictly positive pricing functional has an interesting probabilistic interpretation. If we divide $q_n$ by $m_0 = \sum_{s=1}^{S}m_s$, we get
+\[
+    \frac{q_n}{m_0} = \sum_{s=1}^{S} d_{ns}\pi^*_s, \;\;\; \pi^*_s = \frac{m_s}{m_0}.
+\]
+Here, $(\pi_1^*, \dots, \pi_S^*)$ constitutes a probability measure that is equivalent to the original measure $\pi$. Now we can write $q_n = m_0 \E^*[\tilde{d}_n]$. Thus, $m_0$ is the price of receiving 1 in every state of the world at time $t=1$. If there is a risk-free asset, then the no arbitrage condition should yield that $m_0 = \frac{1}{1+r_f}$. Thus, $q_n = \frac{1}{1 + r_f} \E^*[\tilde{d}_n]$. The result is that $\E^*[\tilde{r}_n] = r_f$.
+
+The strictly positive linear pricing functional defines the risk-neutral probability space. So, if the maket is not complete, there exist many pricing functionals and as a result thhere exist many risk-neutral probability measures. Therefore, completeness of the market relates to uniqueness of the risk-neutral measure.
 
 \end{document}
