@@ -47,8 +47,21 @@
     \end{tabular}
     \caption{Overview of the chapters and sections.}
 \end{table}
-
 \clearpage
+
+\thispagestyle{empty}
+
+\vspace*{\fill}
+\section*{Disclaimer}
+This document is not written by the lecturer, but by a student. It is not guaranteed to be free of errors, nor is it guaranteed to be complete. It is not a replacement for the lectures, nor for the book. It is merely a summary of the lectures and the book, and is intended to be used as a study aid. Use at your own risk.
+
+\bigskip
+\begin{flushright}
+    \textit{Auke Schaap, \today}
+\end{flushright}
+
+\vspace*{\fill}
+\newpage
 
 \thispagestyle{empty}
 \tableofcontents
@@ -228,7 +241,7 @@ We can now define the \textit{expected utility} by:
 \]
 where $u$ is the utility function that represents the preference relation with certainty.
 
-\begin{theorem}[Theorem 2.1]
+\begin{theorem}[Theorem 2.1] % Theorem 2.1
     If $\mathcal{R}$ satisfies the assumptions, then there exist $S$ scalars $u(x_s)$ such that:
     \[
         \forall \tilde{x}_1, \tilde{x}_2 \in \mathcal{M} : \;\; \tilde{x}_1 \mathcal{R} \tilde{x}_2 \iff U(\tilde{x}_1) \geq U(\tilde{x}_2).
@@ -236,7 +249,7 @@ where $u$ is the utility function that represents the preference relation with c
 \end{theorem}
 
 \begin{proof}
-    \todo{Learn this proof!}.
+    see Barucci, Fontana, 2017, p. 21.
 \end{proof}
 
 \section{Risk Aversion}
@@ -268,9 +281,6 @@ The \textit{certainty equivalent} of a gamble $\tilde{x}$ is the amount of money
         \item $\text{CE}_u(\tilde{x}) \leq \E[\tilde{x}]$.
         \item $\rho_u(\tilde{x}) \geq 0$.
     \end{enumerate}
-    \begin{explanation}
-        \todo{Explain!}.
-    \end{explanation}
 \end{proposition}
 Let $\tilde{x} = x + \tilde{\epsilon}$, where $\tilde{\epsilon}$ is a random variable with mean zero and variance $\sigma^2$, so that $\E[\tilde{x}] = x$. Now we can write:
 \[
@@ -295,7 +305,7 @@ We say of two agents $a$ and $b$ that $a$ is more risk averse than $b$ if agent 
 
 \lecture{4}
 
-\begin{proposition} % proposition 2.2
+\begin{proposition}[Proposition 2.2] % Proposition 2.2
     Given two increasing and strictly concave utility functions $u^a$ and $u^b$, the following conditions are equivalent:
     \begin{itemize}
         \item $r^a_{u^a}(x) \geq r^a_{u^b}(x)$ for all $x \in \R_{\geq0}$.
@@ -304,7 +314,56 @@ We say of two agents $a$ and $b$ that $a$ is more risk averse than $b$ if agent 
     \end{itemize}
 \end{proposition}
 \begin{proof}
-    \todo{Prove!}
+    $(i) \iff (ii)$: Since $u^a$ and $u^b$ are both increasing, concave and twice differentiable, there exists a twice differentiable increasing function $g$ such that $u^a(x) = g(u^b(x))$ for all $x \in \R_{\geq0}$. Let $g := u^a \circ (u^b)^{-1}$, which is increasing and twice differentiable. Differentiating $u^a$ yields:
+    \begin{align*}
+        u^{a'} &= g'(u^b(x))u^{b'}(x) \\
+        u^{a''} &= g'(u^b(x))u^{b''}(x) + g''(u^b(x))(u^{b'}(x))^2
+    \end{align*}
+    Dividing by $u^{a'}$ yields:
+    \begin{align*}
+        \frac{u^{a''}}{u^{a'}} &= \frac{u^{b''}(x)}{u^{b'}(x)} + \frac{g''(u^b(x))}{g'(u^b(x))}(u^{b'}(x)) \\
+        -r^a_{u^a}(x) &= -r^a_{u^b}(x) + \frac{g''(u^b(x))}{g'(u^b(x))}(u^{b'}(x)) \\
+        r^a_{u^a}(x) &= r^a_{u^b}(x) - \frac{g''(u^b(x))}{g'(u^b(x))}(u^{b'}(x))
+    \end{align*}
+    Thus, with $u^b$ and $g$ increasing, $r^a_{u^a}(x) = r^a_{u^b}(x) \iff g''(u^b(x)) \leq 0$, for all $x \in \R_{\geq0}$.
+
+    $(ii) \implies (iii)$: Suppose that agents $a$ and $b$ are endowed with the same wealth $x \in \R$. For an arbitrary random variable $\tilde{\epsilon}$ with mean zero, we have that:
+    \begin{align*}
+        u^a(x -\rho_{u^a}(x + \tilde{\epsilon})) &= \E[u^a(x + \tilde{\epsilon})] \\
+        &= \E[g(u^b(x + \tilde{\epsilon}))] \\
+        &\leq g(U^b(x + \tilde{\epsilon})) \\
+        &= g(u^(x - \rho_{u^b}(x + \tilde{\epsilon}))) \\
+        &= u^a(x - \rho_{u^b}(x + \tilde{\epsilon})),
+    \end{align*}
+    where the inequality is due to Jensen's inequality, since $g$ is concave. Because $u^a$ is increasing, we then have $\rho_{u^a}(x + \tilde{\epsilon}) \geq \rho_{u^b}(x + \tilde{\epsilon})$.
+
+    $(iii) \implies (ii)$: As in the first part, since $u^a$ and $u^b$ are strictly increasing, ther exists an increasing function $g$ such that $u^a(x) = g(u^b(x))$. We will need to show that $g$ is concave. Let $x, x' \in \R$ and $\lambda \in [0, 1]$. Define $ \bar{x} := \lambda x + (1 - \lambda)x'$, and consider the gamble $\tilde{\epsilon}$ defined as follows:
+    \[
+        \tilde{\epsilon} = \begin{cases}
+            (1- \lambda)(x - x') & \text{with probability } \lambda \\
+            \lambda(x - x') & \text{with probability } 1 - \lambda
+        \end{cases}
+    \]
+    We have $\E[\tilde{\epsilon}] = 0$. Then, by the definition of risk premium
+    \begin{align*}
+        \lambda u^b(x) + (1 - \lambda)u^b(x') &= \E[u^b(\bar{x} + \tilde{\epsilon})] \\ 
+        &= u^b(\bar{x} - \rho_{u^b}(\bar{x} + \tilde{\epsilon}))
+    \end{align*}
+    Since $u^a(x) = g(u^b(x))$,
+    \[
+        g(\lambda u^b(x) + (1 - \lambda)u^b(x')) = u^a(\bar{x} - \rho_{u^b}(\bar{x} + \tilde{\epsilon}))
+    \]
+    On the other hand,
+    \begin{align*}
+        \lambda g(u^b(x)) + (1 - \lambda)g(u^b(x')) &= \lambda u^a(x) + (1 - \lambda)u^a(x') \\
+        &= \E[u^a(\bar{x} + \tilde{\epsilon})] \\
+        &= u^a(\bar{x} - \rho_{u^a}(\bar{x} + \tilde{\epsilon}))
+    \end{align*}
+    Since $u^a$ is increasing, and using property $(iii)$, we get
+    \[
+        g(\lambda u^b(x) + (1 - \lambda)u^b(x')) \geq \lambda g(u^b(x)) + (1 - \lambda)g(u^b(x'))
+    \]
+    As $x, x' \in \R$ and $\lambda \in [0, 1]$ were arbitrary, $g$ is concave.
 \end{proof}
 
 Examples of utility functions are:
@@ -392,16 +451,28 @@ The first order necessary condition is given by $\E[u'(\tilde{W})(\tilde{r}_n - 
 \end{explanation}
 \end{proposition}
 
-\begin{proposition}
+\begin{proposition}[Proposition 2.5] % Proposition 2.5
     Given $N$ risky assets with returns $\tilde{r}_1, \dots, \tilde{r}_N$, and a risk-free asset with return $r_f > 0$. Let $u$ be differentiable, strictly increasing and concave. Then for $n = 1, \dots, N$:
     \begin{align*}
-        \E[\tilde{r}_n - r_f] &\geq 0 \iff \mathbf{w}^* = cov\left(\tilde{r}_n, u'(W_0\tilde{r}^*)\right) \leq 0, \\
-        \E[\tilde{r}_n - r_f] &\leq 0 \iff \mathbf{w}^* = cov\left(\tilde{r}_n, u'(W_0\tilde{r}^*)\right) \geq 0.
+        \E[\tilde{r}_n - r_f] &\geq 0 \iff cov\left(\tilde{r}_n, u'(W_0\tilde{r}^*)\right) \leq 0, \\
+        \E[\tilde{r}_n - r_f] &\leq 0 \iff cov\left(\tilde{r}_n, u'(W_0\tilde{r}^*)\right) \geq 0.
     \end{align*}
     \begin{explanation}
         A risk-averse agent wants to reduce the variance of his portfolio. For assets that do this (i.e. negative correlation between asset returns and wealth), a negative risk premium is accepted. For assets that increase the variance of the portfolio, a positive risk premium is required.
     \end{explanation}
 \end{proposition}
+
+\begin{proof}
+    By the first order necessary condition, $\E[u'(\tilde{W})(\tilde{r}_n - r_f)] = 0$ for $n = 1, \dots, N$ and recalling that for two random variables $\tilde{x}_1, \tilde{x}_2$ it holds that $cov(\tilde{x}_1, \tilde{x}_2) = \E[\tilde{x}_1\tilde{x}_2] - \E[\tilde{x}_1]\E[\tilde{x}_2]$, we have:
+    \begin{align*}
+        cov(u'(\tilde{W}^*), \tilde{r}_n) &= \E[u'(\tilde{W}^*)\tilde{r}_ n] - \E[\tilde{r}_n]\E[u'(\tilde{W}^*)] \\
+        cov(u'(\tilde{W}^*), \tilde{r}_n) + \E[\tilde{r}_n]\E[u'(\tilde{W}^*)] &= \E[u'(\tilde{W}^*)\tilde{r}_n] \\
+        cov(u'(\tilde{W}^*), \tilde{r}_n) + \E[\tilde{r}_n]\E[u'(\tilde{W}^*)] &= r_f\E[u'(\tilde{W}^*)] \\
+        \frac{cov(u'(\tilde{W}^*), \tilde{r}_n)}{\E[u'(\tilde{W}^*)]} + \E[\tilde{r}_n] &= r_f \\[10pt]
+         \E[\tilde{r}_n] - r_f &= - \frac{cov(u'(\tilde{W}^*), \tilde{r}_n)}{\E[u'(\tilde{W}^*)]}, \;\;\; \text{for all } n = 1, \dots, N.
+    \end{align*}
+    As $u$ is increasing, $u'(\tilde{W}^*) > 0$ and hence the sign of the covariance determines the sign of the risk premium.
+\end{proof}
 
 For returns with a small dispersion, the following approximation holds:
 \[
@@ -447,9 +518,6 @@ The absolute risk aversion coefficient gives information of changes in the level
         r^{r'}_u(z) > 0 \;\;\; \forall z \in \R_{\geq 0} & \implies \frac{dw}{dx}\frac{x}{w} > 1 \;\;\; \forall x \in \R_{\geq 0} \\
         r^{r'}_u(z) = 0 \;\;\; \forall z \in \R_{\geq 0} & \implies \frac{dw}{dx}\frac{x}{w} = 1 \;\;\; \forall x \in \R_{\geq 0}
     \end{align*}
-    \begin{explanation}
-        \todo{Explain}
-    \end{explanation}
 \end{proposition}
 
 \section{Insurance, Demand and Prudence}
@@ -546,7 +614,7 @@ This is relatively weak, as it is defined on a large class of utility functions.
     The following statements are equivalent:
     \begin{itemize}
         \item $w^1 \succeq_{SSD} w^2$
-        \item $\E[\tilde{r}^1] \geq \E[\tilde{r}^2]$, with $G(y) = \int_0^y\left(F_1(z) - F_2(z)\right) dz \leq 0$ for all $y \in [0, 1]$.
+        \item $\E[\tilde{r}^1] = \E[\tilde{r}^2]$, with $G(y) = \int_0^y\left(F_1(z) - F_2(z)\right) dz \leq 0$ for all $y \in [0, 1]$.
         \item $\tilde{r}^2 =^d \tilde{r}^1 + \tilde{\epsilon}$, where $\tilde{\epsilon}$ is a random variable such that $\E[\tilde{\epsilon} | \tilde{r}^1] = 0$.
     \end{itemize}
 \end{proposition}
@@ -607,7 +675,7 @@ where $g$ and $h$ are not dependent on the expected return, and given by:
 
 The PF has the following important properties:
 \begin{enumerate}
-    \item Given two portfolios in the PF, then any other portfolio can be attained by a linear combination of those 2 portfolios.
+    \item Given two portfolios in the PF, then any other portfolio can be attained by a linear combination of those two portfolios.
     \item The covariance and variance are given by:
     \begin{align*}
         cov(\tilde{r}^p, \tilde{r}^q) = \frac{C}{D}\left(\E[\tilde{r}^p] - \frac{A}{C}\right)\left(\E[\tilde{r}^q] - \frac{A}{C}\right) + \frac{1}{C} \\
@@ -643,7 +711,6 @@ The PF has the following important properties:
 
 Note that the return of any portfolio is the linear combination of a portfolio on the frontier, its zero-covariance counterpart and a random variable with zero mean and zero covariance with the frontier portfolios. Furthermore, the coefficients of the frontier portfolio and its zero covariance counterpart are the regression coefficients of the portfolio on those frontier portfolios.
 
-\todo{Excel example?}
 
 \section{Portfolio Frontier with a Risk-Free Asset}
 
@@ -678,7 +745,7 @@ As the PF is a hyperbola in the MSD diagram, we have that, if $r_f \not= \frac{A
     \]
 \end{proposition}
 
-That brings us to the \textit{mutual fund separation} property: For any portfolio $w^q$, there is a portfolio that is on the EPF\textsuperscript{*} which is a linear combination of the risk-free and tangent portfolio on the EPF, that is better in the SSD sense. \todo{rewrite this sentence}
+That brings us to the \textit{mutual fund separation} property: For any portfolio $w^q$, there is a portfolio that is on the EPF\textsuperscript{*} which is a linear combination of the risk-free and tangent portfolio on the EPF, that is better in the SSD sense.
 
 \section{CAPM}
 
@@ -710,7 +777,7 @@ If agents' portfolios belong to the PF, then the market portfolio $w^m$ also bel
     \E[\tilde{r}^q] = \E[\tilde{r}^{zc(m)}] + \beta_{qm}\left(\E[\tilde{r}^m] - \E[\tilde{r}^{zc(m)}]\right), \\
     \tilde{r}^m = \sum_{n=1}^{N} w^m_n \tilde{r}^n, \;\;\; \beta_{qm} = \frac{cov(w^q, w^m)}{\sigma^2(w^m)}.
 \end{align*}
-This is a straight line in the beta-expected return plane. The line is called the \textit{security market line}. If the slope of the line is positive, then the market portfolio is efficient. If the slope is negative, then the market portfolio is inefficient. \todo{multivariate normal asset returns}
+This is a straight line in the beta-expected return plane. The line is called the \textit{security market line}. If the slope of the line is positive, then the market portfolio is efficient. If the slope is negative, then the market portfolio is inefficient.
 
 Including the risk free asset gives the relationship
 \[
@@ -751,7 +818,7 @@ Suppose we have $N$ risky assets, traded in the market in a two period model $(t
 \]
 Here, $\tilde{\delta}_k$ are the risk factors. We assume that $\E[\tilde{\delta}_k] = 0$, and therefore the expected return of asset $n$ is given by $e_n$. That is, $\tilde{r} = e + B\tilde{\delta}$, written in vector form.
 
-\begin{proposition} \label{prop:5.2}
+\begin{proposition}[Proposition 5.2] \label{prop:5.2}
     Given the linear multifactor model for asset returns. Without arbitrage opportunities in the market, there exists a vector $\lambda \in \R^K$ such that:
     \[
         e - r_f\mathbb{I} = B\lambda.
@@ -759,7 +826,15 @@ Here, $\tilde{\delta}_k$ are the risk factors. We assume that $\E[\tilde{\delta}
 \end{proposition}
 
 \begin{proof}
-    \todo{Prove this!}
+    For any portfolio $w \in \R^N$ (representing the proportions of wealth invested in the $N$ risky assets, thereby normalizing the initial wealth to 1), the associated return is given by $w^\top \tilde{r} = w^\top \E[\tilde{r}] + w^\top B \tilde{f}$. Considering a portfolio $w$ such that $w^top \mathbb{I} = 0$, and $w^\top B = 0$, the absence of arbitrage implies that $w^\top \E[\tilde{r}] = 0$ (otherwise, it would be possible to create a portfolio with zero cost and strictly positive return). Equivalently, this means that $\ker(B^\top) \cap \ker(\mathbb{I}^\top) \subseteq \ker(\E[\tilde{r}]^\top)$. Hence, there exists a couple $(\lambda, \lambda_0) \in \R^{K+1}$ such that
+    \[
+        \E\tilde{r} = \mathbb{I}\lambda_0 + B\lambda.
+    \]
+    If the kernel of $B^{\top}$ is a subset of the kernel of $\mathbb{I}^{\top}$, then it holds that $\mathbb{I}=B \gamma$, for some $\gamma \in \mathbb{R}^K$. In this case, the last relation implies that
+    \[
+        \mathbb{E}[\tilde{r}]=B\left(\lambda_0 \gamma+\lambda\right)=B\left(\lambda_0 \gamma-r_f \gamma+\lambda\right)+r_f \mathbb{I},
+    \]
+    thus proving \cref{prop:5.2}. Suppose now that the kernel of $B^{\top}$ is not a subset of the kernel of $\mathbb{I}^{\top}$, so that there exists a vector $w \in \mathbb{R}^N$ such that $w^{\top} B=0$ but $w^{\top} \mathbb{I} \neq 0$. We claim that, due to the absence of arbitrage opportunities, it holds that $\lambda_0=r_f$. Indeed, suppose on the contrary that $\lambda_0>r_f$ (the case $\lambda_0<r_f$ can be treated in an analogous way). Let $\bar{w}:=w /\left(w^{\top} \mathbb{I}\right)$ and consider the following strategy: borrow one unit of wealth at the risk free rate $r_f$ and invest that unit of wealth in the $N$ risky assets according to the portfolio $\bar{w}$. This strategy has zero cost at time $t=0$ and delivers a return of $\bar{w}^{\top} \mathbb{I}\left(\lambda_0-r_f\right)=\lambda_0-r_f>0$ at time $t=1$, thus contradicting the absence of arbitrage opportunities.
 \end{proof}
 
 The expected return of asset $n$ is then given by
@@ -796,13 +871,7 @@ Assume that we have $S$ states of the world, $s = 1, \dots, S$ with the probabil
 Given the price-dividend couple $(q, D)$, a portfolio $w$ constitutes an arbitrage if one of the following holds:
 \begin{itemize}
     \item Arbitrage of the first type: $q^\top w \leq 0$ and $Dw > 0$.
-    \begin{explanation}
-        \todo{explain}
-    \end{explanation}
     \item Arbitrage of the second type: $q^\top w < 0$ and $Dw \geq 0$.
-    \begin{explanation}
-        \todo{explain}
-    \end{explanation}
 \end{itemize}
 From the no-arbitrage assumption, two properties arise. The \textit{law of one price} states that two portfolios with the same dividend in every state of the world at $t=1$, should have the same market value at $t=0$. \textit{Arbitrage without risk} means that there is no portfolio with non-positive market value at $t=0$ getting a constant positive amount of money at $t=1$.
 

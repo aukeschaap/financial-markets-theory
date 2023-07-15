@@ -37,7 +37,7 @@
 % Equations and mathematical symbols
 \usepackage{amsmath, amssymb, amsthm, mathtools}
 \usepackage{calrsfs}
-\usepackage{gensymb}
+\usepackage{textcomp, gensymb}
 
 % Hyperlinks
 \usepackage{hyperref}
@@ -157,8 +157,7 @@
 \showcommentstrue
 % \showcommentsfalse
 \ifshowcomments
-\newcommand{\mynote}[2]{\fbox{\bfseries\sffamily\scriptsize{#1}}
-{\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}}
+\newcommand{\mynote}[2]{\fbox{\bfseries\sffamily\scriptsize{#1}}{\small$\blacktriangleright$\textsf{\emph{#2}}$\blacktriangleleft$}}
 \newcommand{\citehere}[0]{\textcolor{red}{\fbox{\bfseries\sffamily\scriptsize{CITATION}}}}
 \else
 \newcommand{\mynote}[2]{}
