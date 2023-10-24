@@ -16,14 +16,6 @@
   bottom=30mm
 }
 
-% Work in progress
-\usepackage{tikz}
-\AddToHook{shipout/foreground}{
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[gray,rotate=30,scale=20,opacity=0.09] at (current page.center) {Draft}; 
-  \end{tikzpicture}
-}
-
 
 % Better fonts
 % \usepackage{newpxtext}
